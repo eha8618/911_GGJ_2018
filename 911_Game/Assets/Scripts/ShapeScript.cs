@@ -12,19 +12,13 @@ public class ShapeScript : MonoBehaviour
 	void Start ()
     {
         centerBlock.transform.position = transform.position;
-        for (int i = 0; i < blocks.Length; i++)
-        {
-            blocks[i].transform.position = new Vector2(centerBlock.transform.position.x + points[i].x, centerBlock.transform.position.y + points[i].y);
-        }
+        SetBlockPositions();
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        for (int i = 0; i < points.Length; i++)
-        {
-
-        }
+        SetBlockPositions();
 	}
 
     public void SetVisible(bool isVisible)
@@ -32,6 +26,14 @@ public class ShapeScript : MonoBehaviour
         for (int i = 0; i < blocks.Length; i++)
         {
             blocks[i].GetComponent<SpriteRenderer>().enabled = isVisible;
+        }
+    }
+
+    private void SetBlockPositions()
+    {
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            blocks[i].transform.position = new Vector2(centerBlock.transform.position.x + points[i].x, centerBlock.transform.position.y + points[i].y);
         }
     }
 }
