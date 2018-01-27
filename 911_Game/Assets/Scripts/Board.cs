@@ -14,7 +14,7 @@ public class BoardScript : MonoBehaviour {
     public Sprite jack;
     
     protected GameObject[,] board;
-    protected GameObject[,] shapeBoard;
+    protected GameObject[,] callBoard;
     protected bool[,] boolBoard;
 
     // Use this for initialization
@@ -42,15 +42,15 @@ public class BoardScript : MonoBehaviour {
     public void fillBoardSpaces(GameObject call, Vector2 start)
     {
         // Get the shape from the call object
-        ShapeScript shape = call.GetComponent<CallScript>().Shape.GetComponent<ShapeScript>();
-        GameObject centerBlock = shape.centerBlock;
-        shapeBoard[(int)(centerBlock.transform.position.x), (int)(centerBlock.transform.position.y)] = shape.gameObject;
+        CallScript script = call.GetComponent<CallScript>();
+        GameObject centerBlock = script.centerBlock;
+        callBoard[(int)(centerBlock.transform.position.x), (int)(centerBlock.transform.position.y)] = call;
 
-        for (int i = 0; i < shape.points.Length; i++)
+        for (int i = 0; i < script.points.Length; i++)
         {
-            int x = (int)(centerBlock.transform.position.x + shape.points[i].x);
-            int y = (int)(centerBlock.transform.position.y + shape.points[i].y);
-            board[x, y] = shape.blocks[i];
+            int x = (int)(centerBlock.transform.position.x + script.points[i].x);
+            int y = (int)(centerBlock.transform.position.y + script.points[i].y);
+            board[x, y] = script.blocks[i];
             boolBoard[x, y] = true;
         }
     }
@@ -59,14 +59,14 @@ public class BoardScript : MonoBehaviour {
     public void emptyBoardSpaces(GameObject call)
     {
         // Get the shape from the call object
-        ShapeScript shape = call.GetComponent<CallScript>().Shape.GetComponent<ShapeScript>();
-        GameObject centerBlock = shape.centerBlock;
-        shapeBoard[(int)(centerBlock.transform.position.x), (int)(centerBlock.transform.position.y)] = null;
+        CallScript script = call.GetComponent<CallScript>();
+        GameObject centerBlock = script.centerBlock;
+        callBoard[(int)(centerBlock.transform.position.x), (int)(centerBlock.transform.position.y)] = null;
         
-        for (int i = 0; i < shape.points.Length; i++)
+        for (int i = 0; i < script.points.Length; i++)
         {
-            int x = (int)(centerBlock.transform.position.x + shape.points[i].x);
-            int y = (int)(centerBlock.transform.position.y + shape.points[i].y);
+            int x = (int)(centerBlock.transform.position.x + script.points[i].x);
+            int y = (int)(centerBlock.transform.position.y + script.points[i].y);
             board[x, y] = null;
             boolBoard[x, y] = false;
         }
@@ -75,14 +75,14 @@ public class BoardScript : MonoBehaviour {
     public bool checkEmpty(GameObject call, Vector2 start)
     {
         // Get the shape from the call object
-        ShapeScript shape = call.GetComponent<CallScript>().Shape.GetComponent<ShapeScript>();
-        GameObject centerBlock = shape.centerBlock;
+        CallScript script = call.GetComponent<CallScript>();
+        GameObject centerBlock = script.centerBlock;
         centerBlock.transform.position = new Vector3(start.x, start.y, 0);
 
-        for (int i = 0; i < shape.points.Length; i++)
+        for (int i = 0; i < script.points.Length; i++)
         {
-            int x = (int)(centerBlock.transform.position.x + shape.points[i].x);
-            int y = (int)(centerBlock.transform.position.y + shape.points[i].y);
+            int x = (int)(centerBlock.transform.position.x + script.points[i].x);
+            int y = (int)(centerBlock.transform.position.y + script.points[i].y);
             if (boolBoard[x, y])
             {
                 return false;
@@ -120,7 +120,7 @@ public class BoardScript : MonoBehaviour {
 
     public GameObject GetShape(Vector2 index)
     {
-        return shapeBoard[(int)index.x, (int)index.y];
+        return callBoard[(int)index.x, (int)index.y];
     }
 
 

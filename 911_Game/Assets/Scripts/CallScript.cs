@@ -40,6 +40,12 @@ public class CallScript : MonoBehaviour
     private Vector2 incomingCallPos;
 
     public Player player;
+    public GameObject centerBlock;
+    public GameObject[] blocks;
+    public Vector2[] points;
+    public float xScale;
+    public float yScale;
+    public Color color;
 
 
 
@@ -97,11 +103,18 @@ public class CallScript : MonoBehaviour
         callTimePassed = 0;
         callExpireTimePassed = 0;
         colorInterval = 0;
-	}
+        SetBlockPositions();
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            //centerBlock.GetComponent<SpriteRenderer>().color = color;
+            //blocks[i].GetComponent<SpriteRenderer>().color = color;
+        }
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
+        SetBlockPositions();
 
         if (callTaken)
         {
@@ -153,4 +166,21 @@ public class CallScript : MonoBehaviour
 
 
 	}
+
+    public void SetVisible(bool isVisible)
+    {
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            blocks[i].GetComponent<SpriteRenderer>().enabled = isVisible;
+        }
+    }
+
+    private void SetBlockPositions()
+    {
+        centerBlock.transform.position = transform.position;
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            blocks[i].transform.position = new Vector2(centerBlock.transform.position.x + (points[i].x * xScale), centerBlock.transform.position.y + (points[i].y * yScale));
+        }
+    }
 }
