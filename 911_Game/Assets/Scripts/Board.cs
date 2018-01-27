@@ -5,6 +5,7 @@ using UnityEngine;
 public class Board : MonoBehaviour {
 
     // variables for the board class
+    public string message;
     public Camera mainCam;
     public float initialX;
     public float initialY;
@@ -95,7 +96,11 @@ public class Board : MonoBehaviour {
     {
         mousePosition = mainCam.ScreenToWorldPoint(mousePosition);
         Vector2 closest = new Vector2();
-        if (!(mousePosition.x < transform.position.x - xScale) && !(mousePosition.x < transform.position.x + (xScale * (xLength + 1))) && !(mousePosition.y < transform.position.y - yScale) && !(mousePosition.y < transform.position.y + (yScale * (yLength + 1))))
+        if (mousePosition.x + xScale < initialX || initialX + xScale < mousePosition.x || mousePosition.y + yScale < initialY || initialY + yScale < mousePosition.y)
+        {
+            closest = new Vector2(1000000, 1000000);
+        }
+        else
         {
             for (int i = 0; i < xLength; i++)
             {
@@ -112,10 +117,10 @@ public class Board : MonoBehaviour {
                 }
             }
         }
-        else
-        {
-            closest = new Vector2(1000000, 1000000);
-        }
+        //else
+        //{
+        //    closest = new Vector2(1000000, 1000000);
+        //}
         return closest;
     }
 
