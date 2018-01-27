@@ -110,19 +110,19 @@ public class CallScript : MonoBehaviour
             //If the call was successfully finished, call disappears and updates score
             if (CallTimePassed == CallTime)
             {
-
+                player.ChangeScore(pointValue);
             }
         }
         else
         {
-            CallExpireTimePassed += Time.deltaTime;
-            colorIntervalTimePassed += Time.deltaTime;
-
             //Plays initial call tone and adds green indicator
             if (colorIntervalTimePassed == 0 && colorInterval == 0)
             {
 
             }
+
+            CallExpireTimePassed += Time.deltaTime;
+            colorIntervalTimePassed += Time.deltaTime;
 
             if(colorIntervalTimePassed == ColorIntervalTime)
             {
@@ -146,7 +146,7 @@ public class CallScript : MonoBehaviour
             //If time for the call to be taken expires, player loses a life and call disappears
             if (CallExpireTimePassed == CallExpireTime)
             {
-
+                player.lives--;
             }
         }
 

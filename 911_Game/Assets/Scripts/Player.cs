@@ -20,6 +20,7 @@ public class Player : MonoBehaviour {
 	void Start ()
     {
         score = 0;
+        lives = 3;
 	}
 	
 	// Update is called once per frame
@@ -55,7 +56,7 @@ public class Player : MonoBehaviour {
 	}
 
     // Changes the score by the given amount
-    void ChangeScore(int change)
+    public void ChangeScore(int change)
     {
         score += change;
     }
