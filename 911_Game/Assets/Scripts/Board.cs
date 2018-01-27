@@ -17,7 +17,7 @@ public class BoardScript : MonoBehaviour {
     protected bool[,] boolBoard;
 
     // Use this for initialization
-    void Start ()
+    public void Start ()
     {
         // reset board to be blank when spawned
 		board = new GameObject[xLength, yLength];
@@ -38,7 +38,7 @@ public class BoardScript : MonoBehaviour {
 
     // function to be called when board spaces are trying to be taken by a call piece
     // need to change the gameobject to an actual call object
-    void fillBoardSpaces(GameObject call)
+    public void fillBoardSpaces(GameObject call)
     {
         // Get the shape from the call object
         ShapeScript shape = call.GetComponent<CallScript>().Shape.GetComponent<ShapeScript>();
@@ -54,7 +54,7 @@ public class BoardScript : MonoBehaviour {
     }
 
     // function to be called when a call is finished and piece is removed
-    void emptyBoardSpaces(GameObject call)
+    public void emptyBoardSpaces(GameObject call)
     {
         // Get the shape from the call object
         ShapeScript shape = call.GetComponent<CallScript>().Shape.GetComponent<ShapeScript>();
@@ -69,7 +69,7 @@ public class BoardScript : MonoBehaviour {
         }
     }
 
-    bool checkEmpty(GameObject call)
+    public bool checkEmpty(GameObject call)
     {
         // Get the shape from the call object
         ShapeScript shape = call.GetComponent<CallScript>().Shape.GetComponent<ShapeScript>();
@@ -87,7 +87,7 @@ public class BoardScript : MonoBehaviour {
         return true;
     }
 
-    Vector2 GetClosestIndex(Vector2 mousePosition)
+    public Vector2 GetClosestIndex(Vector2 mousePosition)
     {
         Vector2 closest = new Vector2();
         if (!(mousePosition.x < transform.position.x - xScale) && !(mousePosition.x < transform.position.x + (xScale * (xLength + 1))) && !(mousePosition.y < transform.position.y - yScale) && !(mousePosition.y < transform.position.y + (yScale * (yLength + 1))))
