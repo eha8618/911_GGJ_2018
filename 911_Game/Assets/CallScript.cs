@@ -118,18 +118,24 @@ public class CallScript : MonoBehaviour
             CallExpireTimePassed += Time.deltaTime;
             colorIntervalTimePassed += Time.deltaTime;
 
+            //Plays initial call tone and adds green indicator
+            if (colorIntervalTimePassed == 0 && colorInterval == 0)
+            {
+
+            }
+
             if(colorIntervalTimePassed == ColorIntervalTime)
             {
                 colorIntervalTimePassed = 0;
                 colorInterval++;
 
-                //Plays a warning tone
+                //Plays a warning tone and changes color to yellow
                 if (colorInterval == 1)
                 {
 
                 }
 
-                //Plays a danger tone
+                //Plays a danger tone and changes color to red
                 if (colorInterval == 2)
                 {
 
