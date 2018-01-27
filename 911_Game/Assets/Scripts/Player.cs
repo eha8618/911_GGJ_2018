@@ -37,26 +37,33 @@ public class Player : MonoBehaviour {
             if (currentCall == null)
             {
                 currentCall = GenerateRandomCall(1);
-                //currentCall.GetComponent<CallScript>().Selected = true;
-                //currentCall.GetComponent<CallScript>().mainCam = mainCamera;
+                CallScript call = currentCall.GetComponent<CallScript>();
+                call.Selected = true;
                 // Figure out which jack is closest to mouse cursor
                 // Change currentCall's value if the return is valid
                 //Vector2 boardIndex = incomingCallBoard.GetClosestIndex(Input.mousePosition);
                 //currentCall = incomingCallBoard.GetShape(boardIndex);
 
             }
-            // Place currentCall's shape in board if valid
-            else if (currentCall != null && board.checkEmpty(currentCall, incomingCallBoard.GetClosestIndex(Input.mousePosition)))
+
+            else if (currentCall != null)
             {
-                // Placing currentCall's Shape in Board
-                board.fillBoardSpaces(currentCall, board.GetClosestIndex(Input.mousePosition));
-
-                // update score according to the point value of the piece placed onto the board
-                ChangeScore(currentCall.GetComponent<CallScript>().PointValue);
-
-                // set current call to null so that we can assign the next generated call
-                currentCall = null;
+                CallScript call = currentCall.GetComponent<CallScript>();
+                call.Selected = false;
+                Debug.Log(call.Selected);
             }
+            // Place currentCall's shape in board if valid
+            //else if (currentCall != null && board.checkEmpty(currentCall, incomingCallBoard.GetClosestIndex(Input.mousePosition)))
+            //{
+            //    // Placing currentCall's Shape in Board
+            //    board.fillBoardSpaces(currentCall, board.GetClosestIndex(Input.mousePosition));
+
+            //    // update score according to the point value of the piece placed onto the board
+            //    ChangeScore(currentCall.GetComponent<CallScript>().PointValue);
+
+            //    // set current call to null so that we can assign the next generated call
+            //    currentCall = null;
+            //}
         }
 
         if (currentCall != null)
@@ -65,7 +72,7 @@ public class Player : MonoBehaviour {
 
         // Handle level difficulty
         //GenerateRandomCall(2);
-	}
+    }
 
     // Changes the score by the given amount
     public void ChangeScore(int change)
@@ -77,24 +84,22 @@ public class Player : MonoBehaviour {
     GameObject GenerateRandomCall(int difficulty)
     {
         GameObject nextCall;
+        GameObject callToReturn;
 
         switch (difficulty)
         {
             case 1:
                 nextCall = easyCalls[Random.Range(0, easyCalls.Length - 1)];
-                Instantiate(nextCall);
-                
-                return nextCall;
+                callToReturn = Instantiate(nextCall);
+                return callToReturn;
             case 2:
                 nextCall = moderateCalls[Random.Range(0, moderateCalls.Length - 1)];
-                Instantiate(nextCall);
-
-                return nextCall;
+                callToReturn = Instantiate(nextCall);
+                return callToReturn;
             case 3:
                 nextCall = hardCalls[Random.Range(0, hardCalls.Length - 1)];
-                Instantiate(nextCall);
-
-                return nextCall;
+                callToReturn = Instantiate(nextCall);
+                return callToReturn;
         }
 
         return null;

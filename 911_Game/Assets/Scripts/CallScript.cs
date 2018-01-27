@@ -41,7 +41,6 @@ public class CallScript : MonoBehaviour
     private Vector2 incomingCallPos;
 
     public Player player;
-    public Camera mainCam;
     public GameObject centerBlock;
     public GameObject[] blocks;
     public Vector2[] points;
@@ -110,7 +109,7 @@ public class CallScript : MonoBehaviour
         callExpireTimePassed = 0;
         colorInterval = 0;
         SetBlockPositions();
-        SetVisible(false);
+        SetVisible(true);
         for (int i = 0; i < blocks.Length; i++)
         {
             centerBlock.GetComponent<SpriteRenderer>().color = color;
@@ -188,9 +187,13 @@ public class CallScript : MonoBehaviour
         if (selected)
         {
             Vector3 mouse = Input.mousePosition;
-            transform.position = mainCam.ScreenToWorldPoint(new Vector3(mouse.x, mouse.y, 0));
+            transform.position = Camera.main.ScreenToWorldPoint(new Vector3(mouse.x, mouse.y, 0));
         }
+
         centerBlock.transform.position = transform.position;
+        Debug.Log(centerBlock.GetComponent<SpriteRenderer>().isVisible);
+
+
         for (int i = 0; i < blocks.Length; i++)
         {
             blocks[i].transform.position = new Vector2(centerBlock.transform.position.x + (points[i].x * xScale), centerBlock.transform.position.y + (points[i].y * yScale));
