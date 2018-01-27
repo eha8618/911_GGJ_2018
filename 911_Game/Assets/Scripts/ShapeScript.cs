@@ -11,7 +11,11 @@ public class ShapeScript : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-		
+        centerBlock.transform.position = transform.position;
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            blocks[i].transform.position = new Vector2(centerBlock.transform.position.x + points[i].x, centerBlock.transform.position.y + points[i].y);
+        }
 	}
 	
 	// Update is called once per frame

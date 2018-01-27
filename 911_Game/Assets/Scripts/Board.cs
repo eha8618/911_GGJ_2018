@@ -5,6 +5,14 @@ using UnityEngine;
 public class BoardScript : MonoBehaviour {
 
     // variables for the board class
+    public float initialX;
+    public float initialY;
+    public float xScale;
+    public float yScale;
+    public int xLength;
+    public int yLength;
+    public Sprite jack;
+    
     protected GameObject[,] board;
     protected bool[,] boolBoard;
 
@@ -12,7 +20,14 @@ public class BoardScript : MonoBehaviour {
     void Start ()
     {
         // reset board to be blank when spawned
-		board = new GameObject[12, 12];
+		board = new GameObject[xLength, yLength];
+        //for (int i = 0; i < xLength; i++)
+        //{
+        //    for (int j = 0; j < yLength; j++)
+        //    {
+                
+        //    }
+        //}
     }
 	
 	// Update is called once per frame
@@ -70,6 +85,33 @@ public class BoardScript : MonoBehaviour {
             }
         }
         return true;
+    }
+
+    Vector2 GetClosestIndex(Vector2 mousePosition)
+    {
+        Vector2 closest = new Vector2();
+        if (!(mousePosition.x < transform.position.x - xScale) && !(mousePosition.x < transform.position.x + (xScale * (xLength + 1))) && !(mousePosition.y < transform.position.y - yScale) && !(mousePosition.y < transform.position.y + (yScale * (yLength + 1))))
+        {
+            for (int i = 0; i < xLength; i++)
+            {
+                if (xScale * i <= mousePosition.x && mousePosition.x <= (xScale * (i + 1)))
+                {
+                    closest.x = i;
+                }
+            }
+            for (int i = 0; i < yLength; i++)
+            {
+                if (yScale * i <= mousePosition.y && mousePosition.y <= (yScale * (i + 1)))
+                {
+                    closest.y = i;
+                }
+            }
+        }
+        else
+        {
+            closest = new Vector2(1000000, 1000000);
+        }
+        return closest;
     }
 
 
