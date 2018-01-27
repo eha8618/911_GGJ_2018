@@ -191,7 +191,7 @@ public class CallScript : MonoBehaviour
         }
 
         centerBlock.transform.position = transform.position;
-        Debug.Log(centerBlock.GetComponent<SpriteRenderer>().isVisible);
+        Debug.Log(centerBlock.GetComponent<SpriteRenderer>().enabled);
 
 
         for (int i = 0; i < blocks.Length; i++)

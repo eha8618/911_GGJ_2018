@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
-
-    public Camera mainCamera;
+    
     public Board board;
     public Board incomingCallBoard;
     public int lives;
