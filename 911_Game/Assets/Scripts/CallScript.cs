@@ -106,8 +106,8 @@ public class CallScript : MonoBehaviour
         SetBlockPositions();
         for (int i = 0; i < blocks.Length; i++)
         {
-            //centerBlock.GetComponent<SpriteRenderer>().color = color;
-            //blocks[i].GetComponent<SpriteRenderer>().color = color;
+            centerBlock.GetComponent<SpriteRenderer>().color = color;
+            blocks[i].GetComponent<SpriteRenderer>().color = color;
         }
     }
 	
