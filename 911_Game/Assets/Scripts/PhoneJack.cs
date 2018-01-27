@@ -16,23 +16,16 @@ public class PhoneJack : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        check2DObjectClicked();
+
 	}
 
-    void check2DObjectClicked()
+    public void check2DObjectClicked(Vector2 mousePosition)
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            RaycastHit2D hitInfo = Physics2D.Raycast(new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y), new Vector2(0, 0), 0);
+        RaycastHit2D hitInfo = Physics2D.Raycast(new Vector2(Camera.main.ScreenToWorldPoint(mousePosition).x, Camera.main.ScreenToWorldPoint(mousePosition).y), new Vector2(0, 0), 0);
 
-            if (hitInfo)
-            {
-                Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            }
-            else
-            {
-                Debug.Log("Failed");
-            }
+        if (hitInfo)
+        {
+            myBoard.Closest = index;
         }
     }
 }

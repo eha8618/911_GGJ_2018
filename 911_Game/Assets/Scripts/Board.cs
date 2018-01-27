@@ -5,31 +5,33 @@ using UnityEngine;
 public class Board : MonoBehaviour {
 
     // variables for the board class
-    public string message;
     public Camera mainCam;
-    public float initialX;
-    public float initialY;
-    public float xScale;
-    public float yScale;
     public int xLength;
     public int yLength;
+    public PhoneJack[] jacks;
+    public float xJackScale;
+    public float yJackScale;
     
     protected GameObject[,] board;
     protected GameObject[,] callBoard;
     protected bool[,] boolBoard;
+    protected Vector2 closest;
 
+    public Vector2 Closest
+    {
+        get { return closest; }
+        set { closest = value; }
+    }
     // Use this for initialization
     void Start ()
     {
         // reset board to be blank when spawned
 		board = new GameObject[xLength, yLength];
-        //for (int i = 0; i < xLength; i++)
-        //{
-        //    for (int j = 0; j < yLength; j++)
-        //    {
-                
-        //    }
-        //}
+        closest = new Vector2(1000000, 1000000);
+        for (int i = 0; i < jacks.Length; i++)
+        {
+            jacks[i].gameObject.transform.position = new Vector3(transform.position.x + (jacks[i].index.x * xJackScale), transform.position.y + (jacks[i].index.y * yJackScale));
+        }
     }
 	
 	// Update is called once per frame
@@ -94,33 +96,13 @@ public class Board : MonoBehaviour {
 
     public Vector2 GetClosestIndex(Vector2 mousePosition)
     {
-        mousePosition = mainCam.ScreenToWorldPoint(mousePosition);
-        Vector2 closest = new Vector2();
-        if (mousePosition.x + xScale < initialX || initialX + xScale < mousePosition.x || mousePosition.y + yScale < initialY || initialY + yScale < mousePosition.y)
+        closest = new Vector2(1000000, 1000000);
+
+        foreach (PhoneJack jack in jacks)
         {
-            closest = new Vector2(1000000, 1000000);
+            jack.check2DObjectClicked(mousePosition);
         }
-        else
-        {
-            for (int i = 0; i < xLength; i++)
-            {
-                if (xScale * i <= mousePosition.x && mousePosition.x <= (xScale * (i + 1)))
-                {
-                    closest.x = i;
-                }
-            }
-            for (int i = 0; i < yLength; i++)
-            {
-                if (yScale * i <= mousePosition.y && mousePosition.y <= (yScale * (i + 1)))
-                {
-                    closest.y = i;
-                }
-            }
-        }
-        //else
-        //{
-        //    closest = new Vector2(1000000, 1000000);
-        //}
+
         return closest;
     }
 
