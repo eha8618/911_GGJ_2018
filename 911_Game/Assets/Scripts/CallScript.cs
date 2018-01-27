@@ -32,6 +32,7 @@ public class CallScript : MonoBehaviour
     private float callExpireTime;
 
     private bool callTaken;
+    private bool selected;
 
     private float colorIntervalTime;
     private float colorIntervalTimePassed;
@@ -40,6 +41,7 @@ public class CallScript : MonoBehaviour
     private Vector2 incomingCallPos;
 
     public Player player;
+    public Camera mainCam;
     public GameObject centerBlock;
     public GameObject[] blocks;
     public Vector2[] points;
@@ -95,7 +97,11 @@ public class CallScript : MonoBehaviour
         get { return callTaken; }
         set { callTaken = value; }
     }
-
+    public bool Selected
+    {
+        get { return selected; }
+        set { selected = value; }
+    }
 
 	// Use this for initialization
 	void Start ()
@@ -104,6 +110,7 @@ public class CallScript : MonoBehaviour
         callExpireTimePassed = 0;
         colorInterval = 0;
         SetBlockPositions();
+        SetVisible(false);
         for (int i = 0; i < blocks.Length; i++)
         {
             centerBlock.GetComponent<SpriteRenderer>().color = color;
@@ -169,6 +176,7 @@ public class CallScript : MonoBehaviour
 
     public void SetVisible(bool isVisible)
     {
+        centerBlock.GetComponent<SpriteRenderer>().enabled = isVisible;
         for (int i = 0; i < blocks.Length; i++)
         {
             blocks[i].GetComponent<SpriteRenderer>().enabled = isVisible;
@@ -177,6 +185,11 @@ public class CallScript : MonoBehaviour
 
     private void SetBlockPositions()
     {
+        if (selected)
+        {
+            Vector3 mouse = Input.mousePosition;
+            transform.position = mainCam.ScreenToWorldPoint(new Vector3(mouse.x, mouse.y, 0));
+        }
         centerBlock.transform.position = transform.position;
         for (int i = 0; i < blocks.Length; i++)
         {

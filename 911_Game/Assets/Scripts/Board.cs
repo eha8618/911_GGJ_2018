@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoardScript : MonoBehaviour {
+public class Board : MonoBehaviour {
 
     // variables for the board class
+    public Camera mainCam;
     public float initialX;
     public float initialY;
     public float xScale;
     public float yScale;
     public int xLength;
     public int yLength;
-    public Sprite jack;
     
     protected GameObject[,] board;
     protected GameObject[,] callBoard;
@@ -93,6 +93,7 @@ public class BoardScript : MonoBehaviour {
 
     public Vector2 GetClosestIndex(Vector2 mousePosition)
     {
+        mousePosition = mainCam.ScreenToWorldPoint(mousePosition);
         Vector2 closest = new Vector2();
         if (!(mousePosition.x < transform.position.x - xScale) && !(mousePosition.x < transform.position.x + (xScale * (xLength + 1))) && !(mousePosition.y < transform.position.y - yScale) && !(mousePosition.y < transform.position.y + (yScale * (yLength + 1))))
         {
