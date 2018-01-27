@@ -8,7 +8,7 @@ public class Player : MonoBehaviour {
     //public Board board;
     public int lives;
     public Text text;
-    public callPrefab;
+    public GameObject callPrefab;
     public GameObject[] easyShapes;
     public GameObject[] moderateShapes;
     public GameObject[] hardShapes;
@@ -60,25 +60,26 @@ public class Player : MonoBehaviour {
         score += change;
     }
 
-    // Generates a random shape based on given difficulty
-    //Shape GenerateRandomShape(int difficulty)
-    //{
-    //    switch (difficulty)
-    //    {
-    //        case 1:
-
-    //            break;
-    //        case 2:
-    //            break;
-    //        case 3:
-    //            break;
-    //    }
-    //}
+    // Returns a random shape based on given difficulty
+    GameObject GenerateRandomShape(int difficulty)
+    {
+        switch (difficulty)
+        {
+            case 1:
+                return easyShapes[Random.Range(0, easyShapes.Length - 1)];
+            case 2:
+                return moderateShapes[Random.Range(0, easyShapes.Length - 1)];
+            case 3:
+                return hardShapes[Random.Range(0, easyShapes.Length - 1)];
+        }
+        return null;
+    }
 
     // Generates a random call based on given difficulty
     void GenerateRandomCall(int difficulty)
     {
-        //GameObject nextCall = Instantiate(callPrefab);
-        //nextCall.Shape = GenerateRandomShape(difficulty);
+        GameObject nextCall = Instantiate(callPrefab);
+        CallScript nextCallScript = nextCall.GetComponent<CallScript>();
+        nextCallScript.Shape = GenerateRandomShape(difficulty);
     }
 }
