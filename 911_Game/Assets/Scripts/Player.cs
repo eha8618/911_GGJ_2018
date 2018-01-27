@@ -5,13 +5,14 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 
-    //public Board board;
+    public Camera mainCamera;
+    public Board board;
+    public Board incomingCallBoard;
     public int lives;
     public Text text;
-    public GameObject callPrefab;
-    public GameObject[] easyShapes;
-    public GameObject[] moderateShapes;
-    public GameObject[] hardShapes;
+    public GameObject[] easyCalls;
+    public GameObject[] moderateCalls;
+    public GameObject[] hardCalls;
 
     private int score;
     private GameObject currentCall;
@@ -33,26 +34,37 @@ public class Player : MonoBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
             // Get a call object set to currentCall
-            if (currentCall != null)
+            if (currentCall == null)
             {
+                currentCall = GenerateRandomCall(1);
+                //currentCall.GetComponent<CallScript>().Selected = true;
+                //currentCall.GetComponent<CallScript>().mainCam = mainCamera;
                 // Figure out which jack is closest to mouse cursor
                 // Change currentCall's value if the return is valid
+                //Vector2 boardIndex = incomingCallBoard.GetClosestIndex(Input.mousePosition);
+                //currentCall = incomingCallBoard.GetShape(boardIndex);
+
             }
             // Place currentCall's shape in board if valid
-            //else if ()
-            //{
-            //    // Placing currentCall's Shape in Board
-            //    currentCall.GetComponent<CallScript>().
-            //    currentCall = null;
-            //}
+            else if (currentCall != null && board.checkEmpty(currentCall, incomingCallBoard.GetClosestIndex(Input.mousePosition)))
+            {
+                // Placing currentCall's Shape in Board
+                board.fillBoardSpaces(currentCall, board.GetClosestIndex(Input.mousePosition));
+
+                // update score according to the point value of the piece placed onto the board
+                ChangeScore(currentCall.GetComponent<CallScript>().PointValue);
+
+                // set current call to null so that we can assign the next generated call
+                currentCall = null;
+            }
         }
 
         if (currentCall != null)
         {
-            currentCall.transform.position = Input.mousePosition;
         }
 
         // Handle level difficulty
+        //GenerateRandomCall(2);
 	}
 
     // Changes the score by the given amount
@@ -62,25 +74,29 @@ public class Player : MonoBehaviour {
     }
 
     // Returns a random shape based on given difficulty
-    GameObject GenerateRandomShape(int difficulty)
+    GameObject GenerateRandomCall(int difficulty)
     {
+        GameObject nextCall;
+
         switch (difficulty)
         {
             case 1:
-                return easyShapes[Random.Range(0, easyShapes.Length - 1)];
+                nextCall = easyCalls[Random.Range(0, easyCalls.Length - 1)];
+                Instantiate(nextCall);
+                
+                return nextCall;
             case 2:
-                return moderateShapes[Random.Range(0, easyShapes.Length - 1)];
-            case 3:
-                return hardShapes[Random.Range(0, easyShapes.Length - 1)];
-        }
-        return null;
-    }
+                nextCall = moderateCalls[Random.Range(0, moderateCalls.Length - 1)];
+                Instantiate(nextCall);
 
-    // Generates a random call based on given difficulty
-    void GenerateRandomCall(int difficulty)
-    {
-        GameObject nextCall = Instantiate(callPrefab);
-        CallScript nextCallScript = nextCall.GetComponent<CallScript>();
-        nextCallScript.Shape = GenerateRandomShape(difficulty);
+                return nextCall;
+            case 3:
+                nextCall = hardCalls[Random.Range(0, hardCalls.Length - 1)];
+                Instantiate(nextCall);
+
+                return nextCall;
+        }
+
+        return null;
     }
 }
