@@ -17,6 +17,17 @@ public class ShapeScript : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-		
+        for (int i = 0; i < points.Length; i++)
+        {
+
+        }
 	}
+
+    public void SetVisible(bool isVisible)
+    {
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            blocks[i].GetComponent<SpriteRenderer>().enabled = isVisible;
+        }
+    }
 }

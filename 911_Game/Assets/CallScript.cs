@@ -33,6 +33,10 @@ public class CallScript : MonoBehaviour
 
     private bool callTaken;
 
+    private float colorIntervalTime;
+    private float colorIntervalTimePassed;
+    private int colorInterval;
+
     private Vector2 incomingCallPos;
 
     public Player player;
@@ -68,6 +72,12 @@ public class CallScript : MonoBehaviour
         get { return callExpireTimePassed; }
         set { callExpireTimePassed = value; }
     }
+
+    public float ColorIntervalTime
+    {
+        get { return colorIntervalTime; }
+        set { colorIntervalTime = value; }
+    }
     public int PointValue
     {
         get { return pointValue; }
@@ -86,6 +96,7 @@ public class CallScript : MonoBehaviour
     {
         callTimePassed = 0;
         callExpireTimePassed = 0;
+        colorInterval = 0;
 	}
 	
 	// Update is called once per frame
@@ -105,6 +116,26 @@ public class CallScript : MonoBehaviour
         else
         {
             CallExpireTimePassed += Time.deltaTime;
+            colorIntervalTimePassed += Time.deltaTime;
+
+            if(colorIntervalTimePassed == ColorIntervalTime)
+            {
+                colorIntervalTimePassed = 0;
+                colorInterval++;
+
+                //Plays a warning tone
+                if (colorInterval == 1)
+                {
+
+                }
+
+                //Plays a danger tone
+                if (colorInterval == 2)
+                {
+
+                }
+
+            }
 
             //If time for the call to be taken expires, player loses a life and call disappears
             if (CallExpireTimePassed == CallExpireTime)
