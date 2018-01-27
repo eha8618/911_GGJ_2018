@@ -121,6 +121,7 @@ public class CallScript : MonoBehaviour
 	void Update ()
     {
         SetBlockPositions();
+        centerBlock.transform.position = new Vector3(centerBlock.transform.position.x, centerBlock.transform.position.y, 0);
 
         if (callTaken)
         {
