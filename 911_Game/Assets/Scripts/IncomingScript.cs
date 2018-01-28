@@ -5,6 +5,7 @@ using UnityEngine;
 public class IncomingScript : MonoBehaviour {
 
     public int difficulty;
+    public GameObject player;
 
     private float expireTime;
 
@@ -16,12 +17,20 @@ public class IncomingScript : MonoBehaviour {
 
     private void Start()
     {
+        player = GameObject.Find("Player");
         expireTime = 0;
     }
 
     private void Update()
     {
         expireTime += Time.deltaTime;
+
+        if (expireTime >= 10.0f)
+        {
+            player.GetComponent<Player>().lives--;
+
+            Destroy(gameObject);
+        }
     }
 
 }
