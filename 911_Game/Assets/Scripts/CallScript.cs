@@ -151,6 +151,7 @@ public class CallScript : MonoBehaviour
             if (CallTimePassed == CallTime)
             {
                 player.ChangeScore(pointValue);
+                Destroy(gameObject);
             }
         }
         else

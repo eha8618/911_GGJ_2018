@@ -18,6 +18,7 @@ public class Player : MonoBehaviour {
 
     private int score;
     private GameObject currentCall;
+    private float timeInterval;
 
 	// Use this for initialization
 	void Start ()
@@ -25,6 +26,8 @@ public class Player : MonoBehaviour {
         score = 0;
         lives = 3;
         currentCall = null;
+        PopulateIncomingCall(1);
+        timeInterval = 0f;
     }
 	
 	// Update is called once per frame
@@ -55,7 +58,14 @@ public class Player : MonoBehaviour {
                         // Get a call from the incoming board
                         if (currentCall == null)
                         {
-                            incomingCallBoard.GetCall(hit.collider.gameObject.GetComponent<JackScript>().BoardLocation);
+                            GameObject callJack = incomingCallBoard.GetCall(hit.collider.gameObject.GetComponent<JackScript>().BoardLocation);
+                            if (callJack != null && callJack.GetComponent<IncomingScript>() != null)
+                            {
+                                float expireTime = callJack.GetComponent<IncomingScript>().ExpireTime;
+                                currentCall = GenerateRandomCall(callJack.GetComponent<IncomingScript>().difficulty);
+                                currentCall.GetComponent<CallScript>().CallExpireTimePassed = expireTime;
+                                Destroy(callJack);
+                            }
                             if (currentCall != null)
                             {
                                 currentCall.GetComponent<CallScript>().Selected = true;
@@ -75,21 +85,13 @@ public class Player : MonoBehaviour {
         // UI Handling
         text.text = "Lives: " + lives + "\n" + "Score: " + score;
 
-        //// Act on Left-Click Input
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    // Get a call object set to currentCall
-        //    if (currentCall == null)
-        //    {
-        //    }
-        //}
-
-        //if (currentCall != null)
-        //{
-        //}
-
         // Handle level difficulty
-        
+        timeInterval += Time.deltaTime;
+        if (timeInterval > 5f)
+        {
+            timeInterval -= Time.deltaTime;
+            PopulateIncomingCall(Random.Range(1, 4));
+        }
     }
 
     // Changes the score by the given amount
@@ -108,9 +110,11 @@ public class Player : MonoBehaviour {
             case 1:
                 callToReturn = Instantiate(easyCalls[Random.Range(0, easyCalls.Length - 1)]);
                 return callToReturn;
+
             case 2:
                 callToReturn = Instantiate(moderateCalls[Random.Range(0, moderateCalls.Length - 1)]);
                 return callToReturn;
+
             case 3:
                 callToReturn = Instantiate(hardCalls[Random.Range(0, hardCalls.Length - 1)]);
                 return callToReturn;
@@ -128,9 +132,11 @@ public class Player : MonoBehaviour {
             case 1:
                 callToReturn = Instantiate(easyIncomingCall);
                 return callToReturn;
+
             case 2:
                 callToReturn = Instantiate(moderateIncomingCall);
                 return callToReturn;
+
             case 3:
                 callToReturn = Instantiate(hardIncomingCall);
                 return callToReturn;
@@ -142,11 +148,12 @@ public class Player : MonoBehaviour {
     void PopulateIncomingCall(int difficulty)
     {
         Vector2 incomingBoardLoc = new Vector2(Random.Range(0, incomingCallBoard.xLength), Random.Range(0, incomingCallBoard.yLength));
-        while (incomingCallBoard.GetCall(incomingBoardLoc) == null)
+        while (incomingCallBoard.HasEmpty() && incomingCallBoard.GetCall(incomingBoardLoc) != null)
         {
             incomingBoardLoc = new Vector2(Random.Range(0, incomingCallBoard.xLength), Random.Range(0, incomingCallBoard.yLength));
         }
         incomingCallBoard.CallBoard[(int)incomingBoardLoc.x, (int)incomingBoardLoc.y] = GenerateIncomingCall(difficulty);
+        incomingCallBoard.CallBoard[(int)incomingBoardLoc.x, (int)incomingBoardLoc.y].transform.position = new Vector3(incomingCallBoard.transform.position.x + (incomingCallBoard.xScale * (int)incomingBoardLoc.x), incomingCallBoard.transform.position.y + (incomingCallBoard.yScale * (int)incomingBoardLoc.y), 0);
     }
 
     // Puts the call in the board and changes the transform appropriately
@@ -164,40 +171,4 @@ public class Player : MonoBehaviour {
         }
     }
 
-
-
-
-
-
-    //Vector2 boardLoc = incomingCallBoard.GetClosestIndex(Input.mousePosition);
-    //if (boardLoc.x != 1000000 && boardLoc.y != 1000000)
-    //{
-    //    CallScript call = incomingCallBoard.GetShape(boardLoc).GetComponent<CallScript>();
-    //    call.Selected = true;
-    //}
-    // Figure out which jack is closest to mouse cursor
-    // Change currentCall's value if the return is valid
-    //Vector2 boardIndex = incomingCallBoard.GetClosestIndex(Input.mousePosition);
-    //currentCall = incomingCallBoard.GetShape(boardIndex);
-
-    //else if (currentCall != null)
-    //{
-    //    CallScript call = currentCall.GetComponent<CallScript>();
-    //    Vector2 boardLoc = board.GetClosestIndex(Input.mousePosition);
-    //    if (board.CheckEmpty(currentCall, boardLoc))
-    //    {
-    //        board.FillBoardSpaces(currentCall, boardLoc);
-    //        call.Selected = false;
-    //    }
-    //    currentCall = null;
-    //}
-    // Place currentCall's shape in board if valid
-    //else if (currentCall != null && board.checkEmpty(currentCall, incomingCallBoard.GetClosestIndex(Input.mousePosition)))
-    //{
-    //    // Placing currentCall's Shape in Board
-    //    board.fillBoardSpaces(currentCall, board.GetClosestIndex(Input.mousePosition));
-
-    //    // set current call to null so that we can assign the next generated call
-    //    currentCall = null;
-    //}
 }

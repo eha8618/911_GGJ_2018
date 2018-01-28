@@ -125,7 +125,7 @@ Transform:
   m_GameObject: {fileID: 1324322818350212}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children:
   - {fileID: 4872620818901952}
   - {fileID: 4858518915155878}
@@ -181,8 +181,8 @@ MonoBehaviour:
   - {x: 1, y: 0}
   - {x: 0, y: 1}
   - {x: 0, y: -1}
-  xScale: 0.65
-  yScale: 0.65
+  xScale: 0.495
+  yScale: 0.495
   color: {r: 1, g: 0, b: 0, a: 1}
 --- !u!212 &212169953789601374
 SpriteRenderer:

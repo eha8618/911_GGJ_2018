@@ -54,5 +54,5 @@ MonoBehaviour:
   boardPiece: {fileID: 1522331855064784, guid: f647ba0960b911643bc0a32d743c0d14, type: 2}
   xLength: 2
   yLength: 12
-  xScale: 0.725
-  yScale: 0.725
+  xScale: 0.95
+  yScale: 0.95
