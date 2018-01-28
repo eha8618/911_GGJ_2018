@@ -1957,8 +1957,8 @@ MonoBehaviour:
   - {fileID: 114184310610178904}
   - {fileID: 114622541081109770}
   - {fileID: 114930441259724294}
-  xJackScale: 0.75
-  yJackScale: 0.75
+  xJackScale: 0.725
+  yJackScale: 0.725
 --- !u!114 &114392617807275354
 MonoBehaviour:
   m_ObjectHideFlags: 1

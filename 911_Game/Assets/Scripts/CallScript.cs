@@ -17,6 +17,7 @@ public class CallScript : MonoBehaviour
     ///     callExpireTime: Maximum amount of time the call is allowed to be ignored before disappearing
     ///     
     ///     callTaken: switch which shows whether the call is currently being taken
+    ///     selected: true if currently being selected by the player
     /// 
     ///     incomingCallPos: position on the switchboard where the call comes in
     ///     
@@ -192,8 +193,6 @@ public class CallScript : MonoBehaviour
         }
 
         centerBlock.transform.position = transform.position;
-        Debug.Log(centerBlock.GetComponent<SpriteRenderer>().enabled);
-
 
         for (int i = 0; i < blocks.Length; i++)
         {

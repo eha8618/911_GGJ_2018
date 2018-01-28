@@ -313,13 +313,15 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 1802786314711554, guid: 57bf04660cf2e3b49be3b3e89a87d112, type: 2}
-      propertyPath: m_Name
-      value: Left Board
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 57bf04660cf2e3b49be3b3e89a87d112, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1196717864 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114380529394624140, guid: 57bf04660cf2e3b49be3b3e89a87d112,
+    type: 2}
+  m_PrefabInternal: {fileID: 1167636267}
+  m_Script: {fileID: 11500000, guid: 498666ada7f1d874f806c7fa919b9d1e, type: 3}
 --- !u!1001 &1234959037
 Prefab:
   m_ObjectHideFlags: 0
@@ -475,7 +477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   board: {fileID: 1099193058}
-  incomingCallBoard: {fileID: 0}
+  incomingCallBoard: {fileID: 1196717864}
   lives: 3
   text: {fileID: 2009699911}
   easyCalls:

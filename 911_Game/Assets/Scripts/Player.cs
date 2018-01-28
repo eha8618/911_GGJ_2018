@@ -21,7 +21,11 @@ public class Player : MonoBehaviour {
     {
         score = 0;
         lives = 3;
-	}
+        currentCall = null;
+        //GameObject tempCall = GenerateRandomCall(1);
+        //incomingCallBoard.FillBoardSpaces(tempCall, new Vector2(Random.Range(0, 2), Random.Range(0, 12)));
+        //CallScript call = tempCall.GetComponent<CallScript>();
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -35,9 +39,12 @@ public class Player : MonoBehaviour {
             // Get a call object set to currentCall
             if (currentCall == null)
             {
-                currentCall = GenerateRandomCall(1);
-                CallScript call = currentCall.GetComponent<CallScript>();
-                call.Selected = true;
+                Vector2 boardLoc = incomingCallBoard.GetClosestIndex(Input.mousePosition);
+                //if (boardLoc.x != 1000000 && boardLoc.y != 1000000)
+                //{
+                //    CallScript call = incomingCallBoard.GetShape(boardLoc).GetComponent<CallScript>();
+                //    call.Selected = true;
+                //}
                 // Figure out which jack is closest to mouse cursor
                 // Change currentCall's value if the return is valid
                 //Vector2 boardIndex = incomingCallBoard.GetClosestIndex(Input.mousePosition);
@@ -48,17 +55,19 @@ public class Player : MonoBehaviour {
             else if (currentCall != null)
             {
                 CallScript call = currentCall.GetComponent<CallScript>();
-                call.Selected = false;
-                Debug.Log(call.Selected);
+                Vector2 boardLoc = board.GetClosestIndex(Input.mousePosition);
+                if (board.CheckEmpty(currentCall, boardLoc))
+                {
+                    board.FillBoardSpaces(currentCall, boardLoc);
+                    call.Selected = false;
+                }
+                currentCall = null;
             }
             // Place currentCall's shape in board if valid
             //else if (currentCall != null && board.checkEmpty(currentCall, incomingCallBoard.GetClosestIndex(Input.mousePosition)))
             //{
             //    // Placing currentCall's Shape in Board
             //    board.fillBoardSpaces(currentCall, board.GetClosestIndex(Input.mousePosition));
-
-            //    // update score according to the point value of the piece placed onto the board
-            //    ChangeScore(currentCall.GetComponent<CallScript>().PointValue);
 
             //    // set current call to null so that we can assign the next generated call
             //    currentCall = null;

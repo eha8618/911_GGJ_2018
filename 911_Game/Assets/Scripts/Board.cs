@@ -27,6 +27,22 @@ public class Board : MonoBehaviour {
     {
         // reset board to be blank when spawned
 		board = new GameObject[xLength, yLength];
+        boolBoard = new bool[xLength, yLength];
+        for (int i = 0; i < boolBoard.GetLength(0); i++)
+        {
+            for (int j = 0; j < boolBoard.GetLength(1); j++)
+            {
+                boolBoard[i, j] = false;
+            }
+        }
+        callBoard = new GameObject[xLength, yLength];
+        for (int i = 0; i < callBoard.GetLength(0); i++)
+        {
+            for (int j = 0; j < callBoard.GetLength(1); j++)
+            {
+                callBoard[i, j] = null;
+            }
+        }
         closest = new Vector2(1000000, 1000000);
         for (int i = 0; i < jacks.Length; i++)
         {
@@ -42,29 +58,55 @@ public class Board : MonoBehaviour {
 
     // function to be called when board spaces are trying to be taken by a call piece
     // need to change the gameobject to an actual call object
-    public void fillBoardSpaces(GameObject call, Vector2 start)
+    public void FillBoardSpaces(GameObject call, Vector2 start)
     {
         // Get the shape from the call object
         CallScript script = call.GetComponent<CallScript>();
         GameObject centerBlock = script.centerBlock;
-        callBoard[(int)(centerBlock.transform.position.x), (int)(centerBlock.transform.position.y)] = call;
+        callBoard[(int)(start.x), (int)(start.y)] = call;
+
+        // Snap centerBlock to position
+
+        board[(int)start.x, (int)start.y] = centerBlock;
+        int listIndex = (((int)(start.y)) * 2) + (int)(start.x);
+        PhoneJack jack = jacks[listIndex].GetComponent<PhoneJack>();
+        centerBlock.transform.position = new Vector3(jack.transform.position.x, jack.transform.position.y, 0);
 
         for (int i = 0; i < script.points.Length; i++)
         {
             int x = (int)(centerBlock.transform.position.x + script.points[i].x);
+            Debug.Log(x);
             int y = (int)(centerBlock.transform.position.y + script.points[i].y);
+            Debug.Log(y);
             board[x, y] = script.blocks[i];
             boolBoard[x, y] = true;
         }
     }
 
     // function to be called when a call is finished and piece is removed
-    public void emptyBoardSpaces(GameObject call)
+    public void EmptyBoardSpaces(GameObject call)
     {
-        // Get the shape from the call object
+        int indexI = -1;
+        int indexJ = -1;
+        for (int i = 0; i < callBoard.GetLength(0); i++)
+        {
+            for (int j = 0; j < callBoard.GetLength(1); j++)
+            {
+                if (callBoard[i, j] == call)
+                {
+                    indexI = i;
+                    indexJ = j;
+                }
+            }
+        }
+        if (indexI == -1 || indexJ == -1)
+        {
+            return;
+        }
+
         CallScript script = call.GetComponent<CallScript>();
         GameObject centerBlock = script.centerBlock;
-        callBoard[(int)(centerBlock.transform.position.x), (int)(centerBlock.transform.position.y)] = null;
+        callBoard[indexI, indexJ] = null;
         
         for (int i = 0; i < script.points.Length; i++)
         {
@@ -75,7 +117,7 @@ public class Board : MonoBehaviour {
         }
     }
 
-    public bool checkEmpty(GameObject call, Vector2 start)
+    public bool CheckEmpty(GameObject call, Vector2 start)
     {
         // Get the shape from the call object
         CallScript script = call.GetComponent<CallScript>();
