@@ -49,6 +49,7 @@ public class Player : MonoBehaviour {
                             Vector2 boardLoc = hit.collider.gameObject.GetComponent<JackScript>().BoardLocation;
                             currentCall.GetComponent<CallScript>().Selected = false;
                             PlaceCall(currentCall.GetComponent<CallScript>(), boardLoc);
+                            currentCall = null;
                         }
                         break;
 
@@ -67,7 +68,9 @@ public class Player : MonoBehaviour {
                             }
                             if (currentCall != null)
                             {
+                                Debug.Log("6");
                                 currentCall.GetComponent<CallScript>().Selected = true;
+                                Debug.Log(currentCall);
                             }
                         }
                         break;

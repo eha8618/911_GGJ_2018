@@ -85,4 +85,9 @@ public class Board : MonoBehaviour {
         return false;
     }
 
+    public bool Fits(GameObject call, Vector2 start)
+    {
+
+    }
+
 }
