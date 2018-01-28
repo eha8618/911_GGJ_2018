@@ -110,6 +110,10 @@ public class CallScript : MonoBehaviour
         callExpireTimePassed = 0;
         colorInterval = 0;
 
+        callExpireTime = 5.0f;
+        CallTime = 10.0f;
+        PointValue = 5;
+
         // Switch to false once testing is done
         SetVisible(true);
         for (int i = 0; i < blocks.Length; i++)
@@ -131,6 +135,7 @@ public class CallScript : MonoBehaviour
     {
         if (selected)
         {
+            callTaken = true;
             Vector3 mouse = Input.mousePosition;
             transform.position = Camera.main.ScreenToWorldPoint(new Vector3(mouse.x, mouse.y, 0));
             centerBlock.transform.position = transform.position;
@@ -148,7 +153,7 @@ public class CallScript : MonoBehaviour
             CallTimePassed += Time.deltaTime;
 
             // If the call was successfully finished, call disappears and updates score
-            if (CallTimePassed == CallTime)
+            if (CallTimePassed >= CallTime)
             {
                 player.ChangeScore(pointValue);
                 Destroy(gameObject);
@@ -156,39 +161,33 @@ public class CallScript : MonoBehaviour
         }
         else
         {
-            // Plays initial call tone and adds green indicator
-            // Should probably be in start instead
-            if (colorIntervalTimePassed == 0 && colorInterval == 0)
-            {
-
-            }
-
             CallExpireTimePassed += Time.deltaTime;
             colorIntervalTimePassed += Time.deltaTime;
 
-            if(colorIntervalTimePassed == ColorIntervalTime)
-            {
-                colorIntervalTimePassed = 0;
-                colorInterval++;
+            //if(colorIntervalTimePassed >= ColorIntervalTime)
+            //{
+            //    colorIntervalTimePassed = 0;
+            //    colorInterval++;
 
-                //Plays a warning tone and changes color to yellow
-                if (colorInterval == 1)
-                {
+            //    //Plays a warning tone and changes color to yellow
+            //    if (colorInterval == 1)
+            //    {
 
-                }
+            //    }
 
-                //Plays a danger tone and changes color to red
-                if (colorInterval == 2)
-                {
+            //    //Plays a danger tone and changes color to red
+            //    if (colorInterval == 2)
+            //    {
 
-                }
+            //    }
 
-            }
+            //}
 
             //If time for the call to be taken expires, player loses a life and call disappears
-            if (CallExpireTimePassed == CallExpireTime)
+            if (CallExpireTimePassed >= CallExpireTime)
             {
                 player.lives--;
+                Destroy(gameObject);
             }
         }
 
