@@ -131,14 +131,17 @@ public class Player : MonoBehaviour {
         {
             case 1:
                 callToReturn = Instantiate(easyIncomingCall);
+                AddInfo(callToReturn);
                 return callToReturn;
 
             case 2:
                 callToReturn = Instantiate(moderateIncomingCall);
+                AddInfo(callToReturn);
                 return callToReturn;
 
             case 3:
                 callToReturn = Instantiate(hardIncomingCall);
+                AddInfo(callToReturn);
                 return callToReturn;
         }
 
