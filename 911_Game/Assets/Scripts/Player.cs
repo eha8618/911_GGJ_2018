@@ -145,6 +145,11 @@ public class Player : MonoBehaviour {
         return null;
     }
 
+    void AddInfo(GameObject call)
+    {
+        call.GetComponent<CallScript>().player = this;
+    }
+
     void PopulateIncomingCall(int difficulty)
     {
         Vector2 incomingBoardLoc = new Vector2(Random.Range(0, incomingCallBoard.xLength), Random.Range(0, incomingCallBoard.yLength));

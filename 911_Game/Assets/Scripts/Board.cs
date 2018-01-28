@@ -87,7 +87,12 @@ public class Board : MonoBehaviour {
 
     public bool Fits(GameObject call, Vector2 start)
     {
-
+        int x = (int)start.x;
+        int y = (int)start.y;
+        if (callBoard[x, y] != null)
+        {
+            return false;
+        }
     }
 
 }
