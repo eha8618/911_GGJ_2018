@@ -93,6 +93,16 @@ public class Board : MonoBehaviour {
         {
             return false;
         }
+
+        for (int i = 0; i < call.GetComponent<CallScript>().blocks.Length; i++)
+        {
+            if (callBoard[x + (int)call.GetComponent<CallScript>().points[i].x, y + (int)call.GetComponent<CallScript>().points[i].y] != null)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 }

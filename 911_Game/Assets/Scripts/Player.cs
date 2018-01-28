@@ -44,9 +44,9 @@ public class Player : MonoBehaviour {
                 switch (hit.collider.tag)
                 {
                     case "Main":
-                        if (currentCall != null)
+                        Vector2 boardLoc = hit.collider.gameObject.GetComponent<JackScript>().BoardLocation;
+                        if (currentCall != null && board.Fits(currentCall, boardLoc))
                         {
-                            Vector2 boardLoc = hit.collider.gameObject.GetComponent<JackScript>().BoardLocation;
                             currentCall.GetComponent<CallScript>().Selected = false;
                             PlaceCall(currentCall.GetComponent<CallScript>(), boardLoc);
                             currentCall = null;
@@ -109,14 +109,17 @@ public class Player : MonoBehaviour {
         {
             case 1:
                 callToReturn = Instantiate(easyCalls[Random.Range(0, easyCalls.Length - 1)]);
+                AddInfo(callToReturn);
                 return callToReturn;
 
             case 2:
                 callToReturn = Instantiate(moderateCalls[Random.Range(0, moderateCalls.Length - 1)]);
+                AddInfo(callToReturn);
                 return callToReturn;
 
             case 3:
                 callToReturn = Instantiate(hardCalls[Random.Range(0, hardCalls.Length - 1)]);
+                AddInfo(callToReturn);
                 return callToReturn;
         }
 
@@ -131,17 +134,14 @@ public class Player : MonoBehaviour {
         {
             case 1:
                 callToReturn = Instantiate(easyIncomingCall);
-                AddInfo(callToReturn);
                 return callToReturn;
 
             case 2:
                 callToReturn = Instantiate(moderateIncomingCall);
-                AddInfo(callToReturn);
                 return callToReturn;
 
             case 3:
                 callToReturn = Instantiate(hardIncomingCall);
-                AddInfo(callToReturn);
                 return callToReturn;
         }
 
