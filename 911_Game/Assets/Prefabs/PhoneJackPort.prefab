@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212267158833069448}
   - component: {fileID: 61992945164921790}
   m_Layer: 0
-  m_Name: PhoneJackPort 1
+  m_Name: PhoneJackPort
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

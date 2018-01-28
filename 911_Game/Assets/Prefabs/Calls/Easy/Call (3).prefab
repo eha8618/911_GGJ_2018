@@ -119,7 +119,7 @@ MonoBehaviour:
   - {x: 0, y: 1}
   xScale: 0.65
   yScale: 0.65
-  color: {r: 0.99264705, g: 0.014597764, b: 0.014597764, a: 1}
+  color: {r: 0.99264705, g: 0.9656665, b: 0.014597764, a: 1}
 --- !u!212 &212791297463980108
 SpriteRenderer:
   m_ObjectHideFlags: 1
