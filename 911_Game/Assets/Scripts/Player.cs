@@ -26,7 +26,7 @@ public class Player : MonoBehaviour {
         score = 0;
         lives = 3;
         currentCall = null;
-        PopulateIncomingCall(1);
+        //PopulateIncomingCall(1);
         timeInterval = 0f;
     }
 	
@@ -50,11 +50,10 @@ public class Player : MonoBehaviour {
                             currentCall.GetComponent<CallScript>().Selected = false;
                             PlaceCall(currentCall.GetComponent<CallScript>(), boardLoc);
                         }
-                        //Debug.Log(hit.collider.tag);
-                        //Debug.Log(hit.collider.gameObject.GetComponent<JackScript>().BoardLocation);
                         break;
 
                     case "Incoming":
+
                         // Get a call from the incoming board
                         if (currentCall == null)
                         {
@@ -71,8 +70,6 @@ public class Player : MonoBehaviour {
                                 currentCall.GetComponent<CallScript>().Selected = true;
                             }
                         }
-                        //Debug.Log(hit.collider.tag);
-                        //Debug.Log(hit.collider.gameObject.GetComponent<JackScript>().BoardLocation);
                         break;
                 }
             }
@@ -87,10 +84,10 @@ public class Player : MonoBehaviour {
 
         // Handle level difficulty
         timeInterval += Time.deltaTime;
-        if (timeInterval > 5f)
+        if (timeInterval > 2.55f)
         {
-            timeInterval -= Time.deltaTime;
-            PopulateIncomingCall(Random.Range(1, 4));
+            timeInterval -= 2.55f;
+            PopulateIncomingCall(Random.Range(1, 3));
         }
     }
 
@@ -162,10 +159,7 @@ public class Player : MonoBehaviour {
         call.centerBlock.transform.position = board.BoardPositionToWorldPosition(start);
         for (int i = 0; i < call.blocks.Length; i++)
         {
-            Debug.Log(start);
-            Debug.Log(call.points[i]);
             Vector2 spot = start + call.points[i];
-            Debug.Log(spot);
             board.CallBoard[(int)spot.x, (int)spot.y] = call.blocks[i];
             call.blocks[i].transform.position = board.BoardPositionToWorldPosition(spot);
         }
