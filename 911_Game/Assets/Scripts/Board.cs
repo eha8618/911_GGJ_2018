@@ -11,8 +11,21 @@ public class Board : MonoBehaviour {
 
     public int xLength;
     public int yLength;
+    // The x distance between each block
+    public float xScale;
+    // The y distance between each block
+    public float yScale;
     
+    // 2D array for jacks
     protected GameObject[,] board;
+    // 2D array for call blocks
+    protected GameObject[,] callBoard;
+
+    public GameObject[,] CallBoard
+    {
+        get { return callBoard; }
+        set { callBoard = value; }
+    }
 
 
     // Use this for initialization
@@ -25,9 +38,12 @@ public class Board : MonoBehaviour {
         {
             for (int j = 0; j < yLength; j++)
             {
-                board[i, j] = (GameObject)Instantiate(boardPiece, new Vector3(i, j, 0), Quaternion.identity);
+                board[i, j] = Instantiate(boardPiece, new Vector3(transform.position.x + (i * xScale), transform.position.y + (j * yScale), 0), Quaternion.identity);
+                board[i, j].GetComponent<JackScript>().BoardLocation = new Vector2(i, j);
             }
         }
+
+        callBoard = new GameObject[xLength, yLength];
     }
 	
 	// Update is called once per frame
@@ -36,9 +52,18 @@ public class Board : MonoBehaviour {
 		
 	}
 
+    // Returns a Vector3 based on the board position (Vector2) parameter
+    public Vector3 BoardPositionToWorldPosition(Vector2 boardPosition)
+    {
+        return new Vector3(transform.position.x + (boardPosition.x * xScale), transform.position.y + (boardPosition.y * yScale), 0);
+    }
 
-
-
+    // Returns a Call Object based on the given Vector2 and removes it from the board
+    public GameObject GetCall(Vector2 boardLoc)
+    {
+        GameObject call = callBoard[(int)boardLoc.x, (int)boardLoc.y];
+        return call;
+    }
 
 
     //protected Vector2 closest;

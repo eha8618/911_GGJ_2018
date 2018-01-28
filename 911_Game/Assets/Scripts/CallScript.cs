@@ -109,26 +109,45 @@ public class CallScript : MonoBehaviour
         callTimePassed = 0;
         callExpireTimePassed = 0;
         colorInterval = 0;
-        SetBlockPositions();
+
+        // Switch to false once testing is done
         SetVisible(true);
         for (int i = 0; i < blocks.Length; i++)
         {
             centerBlock.GetComponent<SpriteRenderer>().color = color;
             blocks[i].GetComponent<SpriteRenderer>().color = color;
         }
+
+        centerBlock.transform.position = transform.position;
+
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            blocks[i].transform.position = new Vector2(centerBlock.transform.position.x + (points[i].x * xScale), centerBlock.transform.position.y + (points[i].y * yScale));
+        }
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        SetBlockPositions();
+        if (selected)
+        {
+            Vector3 mouse = Input.mousePosition;
+            transform.position = Camera.main.ScreenToWorldPoint(new Vector3(mouse.x, mouse.y, 0));
+            centerBlock.transform.position = transform.position;
+
+            for (int i = 0; i < blocks.Length; i++)
+            {
+                blocks[i].transform.position = new Vector2(centerBlock.transform.position.x + (points[i].x * xScale), centerBlock.transform.position.y + (points[i].y * yScale));
+            }
+        }
+        //SetBlockPositions();
         centerBlock.transform.position = new Vector3(centerBlock.transform.position.x, centerBlock.transform.position.y, 0);
 
         if (callTaken)
         {
             CallTimePassed += Time.deltaTime;
 
-            //If the call was successfully finished, call disappears and updates score
+            // If the call was successfully finished, call disappears and updates score
             if (CallTimePassed == CallTime)
             {
                 player.ChangeScore(pointValue);
@@ -136,7 +155,8 @@ public class CallScript : MonoBehaviour
         }
         else
         {
-            //Plays initial call tone and adds green indicator
+            // Plays initial call tone and adds green indicator
+            // Should probably be in start instead
             if (colorIntervalTimePassed == 0 && colorInterval == 0)
             {
 
@@ -184,19 +204,10 @@ public class CallScript : MonoBehaviour
         }
     }
 
-    private void SetBlockPositions()
-    {
-        if (selected)
-        {
-            Vector3 mouse = Input.mousePosition;
-            transform.position = Camera.main.ScreenToWorldPoint(new Vector3(mouse.x, mouse.y, 0));
-        }
+    //private void SetBlockPositions()
+    //{
+        
 
-        centerBlock.transform.position = transform.position;
-
-        for (int i = 0; i < blocks.Length; i++)
-        {
-            blocks[i].transform.position = new Vector2(centerBlock.transform.position.x + (points[i].x * xScale), centerBlock.transform.position.y + (points[i].y * yScale));
-        }
-    }
+        
+    //}
 }

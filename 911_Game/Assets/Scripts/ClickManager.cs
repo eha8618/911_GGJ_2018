@@ -20,9 +20,18 @@ public class ClickManager : MonoBehaviour {
             RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
             if (hit.collider != null)
             {
-                Debug.Log(hit.collider.gameObject.name);
+                switch (hit.collider.tag)
+                {
+                    case "Main":
+                        Debug.Log(hit.collider.tag);
+                        Debug.Log(hit.collider.gameObject.GetComponent<JackScript>().BoardLocation);
+                        break;
 
-                // should have different behavior depending on which sort of object is clicked
+                    case "Incoming":
+                        Debug.Log(hit.collider.tag);
+                        Debug.Log(hit.collider.gameObject.GetComponent<JackScript>().BoardLocation);
+                        break;
+                }
             }
         }
     }

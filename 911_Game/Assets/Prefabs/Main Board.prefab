@@ -9,50 +9,50 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1851878068884438}
+  m_RootGameObject: {fileID: 1570358269958394}
   m_IsPrefabParent: 1
---- !u!1 &1851878068884438
+--- !u!1 &1570358269958394
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4894523557125380}
-  - component: {fileID: 114990443479637864}
+  - component: {fileID: 4003213512967556}
+  - component: {fileID: 114793870629731876}
   m_Layer: 0
-  m_Name: New Board
+  m_Name: Main Board
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4894523557125380
+--- !u!4 &4003213512967556
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1851878068884438}
+  m_GameObject: {fileID: 1570358269958394}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.2799493, y: 0.33253452, z: -9.7486}
+  m_LocalPosition: {x: -7.38, y: -4.82, z: -9.7486}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114990443479637864
+--- !u!114 &114793870629731876
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1851878068884438}
+  m_GameObject: {fileID: 1570358269958394}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 498666ada7f1d874f806c7fa919b9d1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boardPiece: {fileID: 1692939309875202, guid: da17bc2b17688eb488aa45f6af0ff1ca, type: 2}
-  xLength: 2
-  yLength: 2
-  xScale: 0
-  yScale: 0
+  boardPiece: {fileID: 1099386307431536, guid: af39b6bf02d61614aa94667b5598f8c6, type: 2}
+  xLength: 12
+  yLength: 12
+  xScale: 0.95
+  yScale: 0.95

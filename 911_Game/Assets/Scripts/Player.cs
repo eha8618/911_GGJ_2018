@@ -27,24 +27,63 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        // UI Handling
-        text.text = "Lives: " + lives + "\n" + "Score: " + score;
-
-        // Act on Left-Click Input
         if (Input.GetMouseButtonDown(0))
         {
-            // Get a call object set to currentCall
-            if (currentCall == null)
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
+
+            RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
+            if (hit.collider != null)
             {
+                switch (hit.collider.tag)
+                {
+                    case "Main":
+                        if (currentCall != null)
+                        {
+                            Vector2 boardLoc = hit.collider.gameObject.GetComponent<JackScript>().BoardLocation;
+                            currentCall.GetComponent<CallScript>().Selected = false;
+                            PlaceCall(currentCall.GetComponent<CallScript>(), boardLoc);
+                        }
+                        Debug.Log(hit.collider.tag);
+                        Debug.Log(hit.collider.gameObject.GetComponent<JackScript>().BoardLocation);
+                        break;
+
+                    case "Incoming":
+                        // 
+                        if (currentCall == null)
+                        {
+
+                            //currentCall.GetComponent<CallScript>().Selected = true;
+                        }
+                        Debug.Log(hit.collider.tag);
+                        Debug.Log(hit.collider.gameObject.GetComponent<JackScript>().BoardLocation);
+                        break;
+                }
             }
         }
 
-        if (currentCall != null)
-        {
-        }
+
+
+
+
+        // UI Handling
+        text.text = "Lives: " + lives + "\n" + "Score: " + score;
+
+        //// Act on Left-Click Input
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    // Get a call object set to currentCall
+        //    if (currentCall == null)
+        //    {
+        //    }
+        //}
+
+        //if (currentCall != null)
+        //{
+        //}
 
         // Handle level difficulty
-        //GenerateRandomCall(2);
+        
     }
 
     // Changes the score by the given amount
@@ -56,26 +95,37 @@ public class Player : MonoBehaviour {
     // Returns a random shape based on given difficulty
     GameObject GenerateRandomCall(int difficulty)
     {
-        GameObject nextCall;
         GameObject callToReturn;
 
         switch (difficulty)
         {
             case 1:
-                nextCall = easyCalls[Random.Range(0, easyCalls.Length - 1)];
-                callToReturn = Instantiate(nextCall);
+                callToReturn = Instantiate(easyCalls[Random.Range(0, easyCalls.Length - 1)]);
                 return callToReturn;
             case 2:
-                nextCall = moderateCalls[Random.Range(0, moderateCalls.Length - 1)];
-                callToReturn = Instantiate(nextCall);
+                callToReturn = Instantiate(moderateCalls[Random.Range(0, moderateCalls.Length - 1)]);
                 return callToReturn;
             case 3:
-                nextCall = hardCalls[Random.Range(0, hardCalls.Length - 1)];
-                callToReturn = Instantiate(nextCall);
+                callToReturn = Instantiate(hardCalls[Random.Range(0, hardCalls.Length - 1)]);
                 return callToReturn;
         }
 
         return null;
+    }
+
+    // Puts the call in the board and changes the transform appropriately
+    void PlaceCall(CallScript call, Vector2 start)
+    {
+        call.centerBlock.transform.position = board.BoardPositionToWorldPosition(start);
+        for (int i = 0; i < call.blocks.Length; i++)
+        {
+            Debug.Log(start);
+            Debug.Log(call.points[i]);
+            Vector2 spot = start + call.points[i];
+            Debug.Log(spot);
+            board.CallBoard[(int)spot.x, (int)spot.y] = call.blocks[i];
+            call.blocks[i].transform.position = board.BoardPositionToWorldPosition(spot);
+        }
     }
 
 
