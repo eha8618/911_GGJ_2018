@@ -68,9 +68,7 @@ public class Player : MonoBehaviour {
                             }
                             if (currentCall != null)
                             {
-                                Debug.Log("6");
                                 currentCall.GetComponent<CallScript>().Selected = true;
-                                Debug.Log(currentCall);
                             }
                         }
                         break;
