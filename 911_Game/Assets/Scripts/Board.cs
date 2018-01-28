@@ -94,9 +94,13 @@ public class Board : MonoBehaviour {
             return false;
         }
 
+        int nextX = -1;
+        int nextY = -1;
         for (int i = 0; i < call.GetComponent<CallScript>().blocks.Length; i++)
         {
-            if (callBoard[x + (int)call.GetComponent<CallScript>().points[i].x, y + (int)call.GetComponent<CallScript>().points[i].y] != null)
+            nextX = x + (int)call.GetComponent<CallScript>().points[i].x;
+            nextY = y + (int)call.GetComponent<CallScript>().points[i].y;
+            if (nextX < 0 || nextX >= xLength || nextY < 0 || nextY >= yLength || callBoard[nextX, nextY] != null)
             {
                 return false;
             }
