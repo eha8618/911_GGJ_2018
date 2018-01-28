@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Main
   - Incoming
+  - Play
+  - Rules
   layers:
   - Default
   - TransparentFX
