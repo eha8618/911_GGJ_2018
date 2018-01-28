@@ -26,7 +26,7 @@ public class PhoneJack : MonoBehaviour {
         if (hitInfo)
         {
             Debug.Log(index);
-            myBoard.Closest = index;
+            //myBoard.Closest = index;
         }
     }
 }
