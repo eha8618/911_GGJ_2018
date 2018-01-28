@@ -70,3 +70,5 @@ MonoBehaviour:
     type: 2}
   hardIncomingCall: {fileID: 1363041467948360, guid: a4719e6cdcd4d234f80f44210e9b9ae7,
     type: 2}
+  audioStart: {fileID: 0}
+  audioFinal: {fileID: 0}

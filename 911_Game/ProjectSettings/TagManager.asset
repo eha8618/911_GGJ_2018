@@ -8,6 +8,7 @@ TagManager:
   - Incoming
   - Play
   - Rules
+  - Menu
   layers:
   - Default
   - TransparentFX

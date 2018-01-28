@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
     
@@ -15,6 +16,8 @@ public class Player : MonoBehaviour {
     public GameObject easyIncomingCall;
     public GameObject moderateIncomingCall;
     public GameObject hardIncomingCall;
+    public GameObject audioStart;
+    public GameObject audioFinal;
 
     private int score;
     private GameObject currentCall;
@@ -24,7 +27,6 @@ public class Player : MonoBehaviour {
 	void Start ()
     {
         score = 0;
-        lives = 3;
         currentCall = null;
         //PopulateIncomingCall(1);
         timeInterval = 0f;
@@ -33,6 +35,15 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        if (lives == 1)
+        {
+            audioStart.GetComponent<AudioSource>().mute = true;
+            audioFinal.GetComponent<AudioSource>().mute = false;
+        }
+        else if (lives == 0)
+        {
+            SceneManager.LoadScene("Menu");
+        }
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
