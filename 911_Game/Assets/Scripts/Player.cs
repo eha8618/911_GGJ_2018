@@ -12,6 +12,9 @@ public class Player : MonoBehaviour {
     public GameObject[] easyCalls;
     public GameObject[] moderateCalls;
     public GameObject[] hardCalls;
+    public GameObject easyIncomingCall;
+    public GameObject moderateIncomingCall;
+    public GameObject hardIncomingCall;
 
     private int score;
     private GameObject currentCall;
@@ -44,19 +47,22 @@ public class Player : MonoBehaviour {
                             currentCall.GetComponent<CallScript>().Selected = false;
                             PlaceCall(currentCall.GetComponent<CallScript>(), boardLoc);
                         }
-                        Debug.Log(hit.collider.tag);
-                        Debug.Log(hit.collider.gameObject.GetComponent<JackScript>().BoardLocation);
+                        //Debug.Log(hit.collider.tag);
+                        //Debug.Log(hit.collider.gameObject.GetComponent<JackScript>().BoardLocation);
                         break;
 
                     case "Incoming":
-                        // 
+                        // Get a call from the incoming board
                         if (currentCall == null)
                         {
-
-                            //currentCall.GetComponent<CallScript>().Selected = true;
+                            incomingCallBoard.GetCall(hit.collider.gameObject.GetComponent<JackScript>().BoardLocation);
+                            if (currentCall != null)
+                            {
+                                currentCall.GetComponent<CallScript>().Selected = true;
+                            }
                         }
-                        Debug.Log(hit.collider.tag);
-                        Debug.Log(hit.collider.gameObject.GetComponent<JackScript>().BoardLocation);
+                        //Debug.Log(hit.collider.tag);
+                        //Debug.Log(hit.collider.gameObject.GetComponent<JackScript>().BoardLocation);
                         break;
                 }
             }
@@ -111,6 +117,36 @@ public class Player : MonoBehaviour {
         }
 
         return null;
+    }
+
+    GameObject GenerateIncomingCall(int difficulty)
+    {
+        GameObject callToReturn;
+
+        switch (difficulty)
+        {
+            case 1:
+                callToReturn = Instantiate(easyIncomingCall);
+                return callToReturn;
+            case 2:
+                callToReturn = Instantiate(moderateIncomingCall);
+                return callToReturn;
+            case 3:
+                callToReturn = Instantiate(hardIncomingCall);
+                return callToReturn;
+        }
+
+        return null;
+    }
+
+    void PopulateIncomingCall(int difficulty)
+    {
+        Vector2 incomingBoardLoc = new Vector2(Random.Range(0, incomingCallBoard.xLength), Random.Range(0, incomingCallBoard.yLength));
+        while (incomingCallBoard.GetCall(incomingBoardLoc) == null)
+        {
+            incomingBoardLoc = new Vector2(Random.Range(0, incomingCallBoard.xLength), Random.Range(0, incomingCallBoard.yLength));
+        }
+        incomingCallBoard.CallBoard[(int)incomingBoardLoc.x, (int)incomingBoardLoc.y] = GenerateIncomingCall(difficulty);
     }
 
     // Puts the call in the board and changes the transform appropriately

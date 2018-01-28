@@ -23,13 +23,13 @@ public class ClickManager : MonoBehaviour {
                 switch (hit.collider.tag)
                 {
                     case "Main":
-                        Debug.Log(hit.collider.tag);
-                        Debug.Log(hit.collider.gameObject.GetComponent<JackScript>().BoardLocation);
+                        //Debug.Log(hit.collider.tag);
+                        //Debug.Log(hit.collider.gameObject.GetComponent<JackScript>().BoardLocation);
                         break;
 
                     case "Incoming":
-                        Debug.Log(hit.collider.tag);
-                        Debug.Log(hit.collider.gameObject.GetComponent<JackScript>().BoardLocation);
+                        //Debug.Log(hit.collider.tag);
+                        //Debug.Log(hit.collider.gameObject.GetComponent<JackScript>().BoardLocation);
                         break;
                 }
             }

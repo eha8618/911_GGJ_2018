@@ -61,7 +61,11 @@ public class Board : MonoBehaviour {
     // Returns a Call Object based on the given Vector2 and removes it from the board
     public GameObject GetCall(Vector2 boardLoc)
     {
-        GameObject call = callBoard[(int)boardLoc.x, (int)boardLoc.y];
+        GameObject call = null;
+        if ((int)boardLoc.x < 0 || (int)boardLoc.x >= xLength || (int)boardLoc.y < 0 || (int)boardLoc.y >= yLength)
+        {
+            call = callBoard[(int)boardLoc.x, (int)boardLoc.y];
+        }
         return call;
     }
 
